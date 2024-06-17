@@ -17,3 +17,17 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.slither.outputs.sarif }}
+permissions:
+  actions: read
+  checks: read
+  contents: read
+  deployments: read
+  id-token: none
+  issues: write
+  discussions: read
+  packages: read
+  pages: read
+  pull-requests: write
+  repository-projects: read
+  security-events: write
+  statuses: read
