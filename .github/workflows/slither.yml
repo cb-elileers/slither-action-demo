@@ -18,16 +18,16 @@ jobs:
         with:
           sarif_file: ${{ steps.slither.outputs.sarif }}
 permissions:
-  actions: read
-  checks: read
-  contents: read
-  deployments: read
+  actions: none
+  checks: none
+  contents: none
+  deployments: none
   id-token: none
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  pull-requests: read
-  repository-projects: read
-  security-events: read
-  statuses: read
+  issues: none
+  discussions: none
+  packages: none
+  pages: none
+  pull-requests: none
+  repository-projects: none
+  security-events: write
+  statuses: none
