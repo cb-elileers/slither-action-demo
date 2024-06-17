@@ -1,4 +1,6 @@
 name: Slither Analysis
+# Config File for Public Github Repos
+## Private Github needs External Action support, this will not work in Private Github
 on:
   # Only run this action on pushes / pull requests to main branch
   push:
@@ -14,10 +16,11 @@ jobs:
       - name: Run Slither
         uses: crytic/slither-action@v0.4.0
         id: slither
-        continue-on-error: true
+        # continue-on-error: true
         with:
           sarif: results.sarif
-          fail-on: all
+          # Don't fail so that SARIF step still works
+          fail-on: none
           # advanced: this can be set by Slither config file by using the next line instead
           # fail-on: config
 
