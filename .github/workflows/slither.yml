@@ -14,10 +14,10 @@ jobs:
       - name: Run Slither
         uses: crytic/slither-action@v0.4.0
         id: slither
+        continue-on-error: true
         with:
           sarif: results.sarif
           fail-on: all
-          continue-on-error: true
           # advanced: this can be set by Slither config file by using the next line instead
           # fail-on: config
 
