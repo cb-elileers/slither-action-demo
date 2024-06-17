@@ -1,16 +1,32 @@
 name: Slither Analysis
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+
+on: 
+ push:
+    branches: [ main ]
+ pull_request:
+    branches: [ main ]
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: crytic/slither-action@v0.2.0
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
-          target: 'src/'
-          slither-args: '--checklist'
-          fail-on: 'low'
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Install dependencies
+        run: forge install
+
+      - name: Build project
+        run: forge build --extra-output abi --extra-output userdoc --extra-output devdoc --extra-output evm.methodIdentifiers --force
+
+      - name: Run Slither
+        uses: crytic/slither-action@v0.1.1 
+        with:
+          ignore-compile: true
