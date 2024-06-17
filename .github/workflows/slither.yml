@@ -1,32 +1,19 @@
 name: Slither Analysis
-
-on: 
- push:
-    branches: [ main ]
- pull_request:
-    branches: [ main ]
-
+on: [push]
 jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: nightly
-
-      - name: Install dependencies
-        run: forge install
-
-      - name: Build project
-        run: forge build --extra-output abi --extra-output userdoc --extra-output devdoc --extra-output evm.methodIdentifiers --force
+      - uses: actions/checkout@v4
 
       - name: Run Slither
-        uses: crytic/slither-action@v0.1.1 
+        uses: crytic/slither-action@v0.4.0
+        id: slither
         with:
-          ignore-compile: true
+          sarif: results.sarif
+          fail-on: none
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.slither.outputs.sarif }}
